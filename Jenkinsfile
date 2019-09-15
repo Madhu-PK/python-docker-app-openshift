@@ -6,14 +6,14 @@ node{
       }
    
    stage('Docker Build') {
-     def app = docker.build "manee2k6/py-spartans"
+     def app = docker.build "madhu-pk/py-spartans"
     }
    
    stage("Tag & Push image"){
       withDockerRegistry([credentialsId: 'dockerID',url: ""]) {
-          sh 'docker tag manee2k6/py-spartans manee2k6/py-spartans:dev'
-          sh 'docker push manee2k6/py-spartans:dev'
-          sh 'docker push manee2k6/py-spartans:latest'
+          sh 'docker tag madhu/py-spartans madhu/py-spartans:dev'
+          sh 'docker push madhu/py-spartans:dev'
+          sh 'docker push madhu/py-spartans:latest'
       }
     }
    
@@ -22,7 +22,7 @@ node{
      sh 'oc project itrainspartans'
      //sh 'oc new-app --name py-mani manee2k6/py-spartans'
       sh 'oc rollout latest dc/py-mani -o json' 
-      sh 'oc rollout latest manee2k6/py-newrelic --name python \
+      sh 'oc rollout latest madhu/py-newrelic --name python \
           --env NEWRELIC_LICENSE=xxxxxx \
                 NEWRELIC_APPNAME=pyapp'
      //sh 'oc expose svc py-mani' 
