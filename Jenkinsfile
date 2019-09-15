@@ -6,26 +6,26 @@ node{
       }
    
    stage('Docker Build') {
-     def app = docker.build "madhu-pk/py-spartans"
+     def app = docker.build "madhupk/python-newrelic"
     }
    
    stage("Tag & Push image"){
       withDockerRegistry([credentialsId: 'dockerID',url: ""]) {
-          sh 'docker tag madhu/py-spartans madhu/py-spartans:dev'
-          sh 'docker push madhu/py-spartans:dev'
-          sh 'docker push madhu/py-spartans:latest'
+          sh 'docker tag madhupk/python-newrelic madhupk/python-newrelic:dev'
+          sh 'docker push madhupk/python-newrelic:dev'
+          sh 'docker push madhupk/python-newrelic:latest'
       }
     }
    
    stage("App deployment started"){
-     sh 'oc login --token=VQUyTz1TcNmkHU8d9of0D4HZdkC6nXLozsuZg7njj9g --server=https://api.us-west-1.starter.openshift-online.com:6443'
+     sh 'oc login --token=RRBjJ0hQ656AT-v9dtzA9uZ4cnRbwz4fba0fwm5KmFY --server=https://api.us-west-1.starter.openshift-online.com:6443'
      sh 'oc project itrainspartans'
-     //sh 'oc new-app --name py-mani manee2k6/py-spartans'
-      sh 'oc rollout latest dc/py-mani -o json' 
-      sh 'oc rollout latest madhu/py-newrelic --name python \
-          --env NEWRELIC_LICENSE=xxxxxx \
-                NEWRELIC_APPNAME=pyapp'
-     //sh 'oc expose svc py-mani' 
+     sh 'oc new-app --name python-newrelic madhupk/python-newrelic'
+      sh 'oc rollout latest dc/python-newrelic -o json' 
+      sh 'oc rollout latest madhupk/python-newrelic --name python \
+          --env NEWRELIC_LICENSE=97dddff513f56c90ce7a8fb577a6fca70649a81e \
+                NEWRELIC_APPNAME=python-newrelic'
+     //sh 'oc expose svc python-newrelic' 
     }
    
     stage('App deployed to Openshift environment') {
