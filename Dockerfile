@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
-FROM manee2k6/python:latest
+FROM madhupk/python-newrelic:latest
 
-MAINTAINER MANIVANNAN.C
+MAINTAINER madhupk
 
 # Set the working directory to /app
 WORKDIR /app
